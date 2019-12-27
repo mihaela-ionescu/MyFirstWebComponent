@@ -1,0 +1,10 @@
+{
+    "scripts": {
+        "build": "tsc && npm run copy-html && npm run copy-assets ",
+        "copy-html":"copy .\\src\\app\\index.html .\\build",
+        "copy-assets":"copy .\\assets\\* .\\build"
+    },
+    "devDependencies": {
+        "typescript": "^3.7.3"
+    }
+}
