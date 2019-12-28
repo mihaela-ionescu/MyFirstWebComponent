@@ -6,8 +6,17 @@
         import './img-inline-svg.js'
     </script>
     <title>My First Web Component</title>
+    <style>
+        img-inline-svg {
+            width: 48px !important;
+            height: 48px !important;
+        }
+    </style>
   </head>
   <body style="background-color: lightgray;">      
-      <img-inline-svg src="account_circle-24px.svg"></img-inline-svg>
+      <img-inline-svg src="account_circle-24px.svg" style="fill: purple"></img-inline-svg>
+      <button onclick="document.querySelector('img-inline-svg').color='green'">Green</button>
+      <button onclick="document.querySelector('img-inline-svg').color=''">Default</button>
+      <button onclick="document.querySelector('img-inline-svg').style.fill='brown'">Brown</button>
   </body>
 </html>
