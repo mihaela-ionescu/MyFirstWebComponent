@@ -1,18 +1,16 @@
-class ImgInlineSvg extends HTMLElement {
-  private fillColor: string;
+export class ImgInlineSvg extends HTMLElement {
 
-  set color(c: string) {
+  _color() {
+    const fillColor = getComputedStyle(this).color || "white";
     const svg = this.shadowRoot.querySelector("svg");
     if (svg) {
-      svg.style.fill = c;
+      svg.style.fill = fillColor;
     }
   }
 
   constructor() {
-    console.log("constr");
     super();
     const imgSrc = this.getAttribute("src");
-    this.fillColor = this.getAttribute("color") || "white";
     const shadow = this.attachShadow({ mode: "open" });
     fetch(imgSrc)
       .then(response => response.text())
@@ -21,35 +19,31 @@ class ImgInlineSvg extends HTMLElement {
         shadow.innerHTML = `
         <style>
         :host {
-            display: block;
+            display: inline-block;
         }
         svg {
-            fill: ${this.fillColor};
             width: 100%;
             height: 100%;
         }
         </style>        
         ${mySvg}
         `;
+        this._color();
       });
   }
 
   connectedCallback() {
-    console.log("Connected.");
+    this._color();
   }
 
   static get observedAttributes() {
-    return ["src", "color", "style"];
+    return ["src", "style"];
   }
 
   attributeChangedCallback(name: string, oldValue: string, newValue: string) {
-    console.log("Attributes changed.", name, oldValue, newValue);
-    if (name === "color") {
-      this.color = newValue;
-    }
+
     if (name === "style") {
-      this.color = getComputedStyle(this).fill;
-      // this.color=this.style.fill;
+      this._color();
     }
   }
 }
