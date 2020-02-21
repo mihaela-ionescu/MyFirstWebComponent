@@ -3,7 +3,37 @@
   <head>
     <meta charset="utf-8">
     <script type="module">
-        import './img-inline-svg.js'
+        import './img-inline-svg.js';
+        import './popup-info.js';
+    </script>
+    <script>
+      const greenClick = () => {
+        console.log('green');
+        document.querySelector('#account').style.color='green';
+        // [...document.querySelectorAll('img-inline-svg')].map(x=>x.style.color='green');
+      }
+      const defaultClick = () => {
+        console.log('default');
+        [...document.querySelectorAll('img-inline-svg')].map(x=>x.style.color='');
+      }
+      const brownClick = () => {
+        console.log('brown');
+        [...document.querySelectorAll('img-inline-svg')].map(x=>x.style.color='brown');
+      }
+
+      const removeElement = () => {
+        if(document.querySelector('#account')) {
+          document.querySelector('#img-inline-svg-div').removeChild(document.querySelector('#account'));
+        }
+      }
+
+      const appendElement = () => {
+        if(!document.querySelector('#account')) {
+          var myEl = document.createElement('span');
+          myEl.innerHTML = `<img-inline-svg id="account" src="account_circle-24px.svg" style="color: purple"></img-inline-svg>`;
+          document.querySelector('#img-inline-svg-div').insertBefore(myEl.firstChild, document.querySelector('#img-inline-svg-div').firstChild);
+        }
+      }
     </script>
     <title>My First Web Component</title>
     <style>
@@ -13,10 +43,23 @@
         }
     </style>
   </head>
-  <body style="background-color: lightgray;">      
-      <img-inline-svg src="account_circle-24px.svg" style="fill: purple"></img-inline-svg>
-      <button onclick="document.querySelector('img-inline-svg').color='green'">Green</button>
-      <button onclick="document.querySelector('img-inline-svg').color=''">Default</button>
-      <button onclick="document.querySelector('img-inline-svg').style.fill='brown'">Brown</button>
+  <body style="background-color: lightgray;">
+    <div id="img-inline-svg-div">
+      <img-inline-svg id="account" src="account_circle-24px.svg" style="color: purple"></img-inline-svg>
+      <img-inline-svg id="swap" src="swap_horizontal_circle-24px.svg" style="color: royalblue"></img-inline-svg>      
+      <button onclick="greenClick()">Green</button>
+      <button onclick="defaultClick()">Default</button>
+      <button onclick="brownClick()">Brown</button>
+      <button onclick="removeElement()">Remove element</button>
+      <button onclick="appendElement()">Append element</button>
+    </div>
+    <br/>
+    <br/>
+    <br/>
+    <br/>
+    <div id="popup-info-div">
+      <label for="cvc">Enter your CVC <popup-info img="alt.png" data-text="Your card validation code (CVC) is an extra security feature — it is the last 3 or 4 numbers on the back of your card."></popup-info></label>
+      <input type="text" id="cvc">
+    </div>
   </body>
 </html>
