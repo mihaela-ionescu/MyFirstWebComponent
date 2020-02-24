@@ -1,10 +1,20 @@
 export class ImgInlineSvg extends HTMLElement {
 
+  title = 'mihaela';  
   // private _root: ShadowRoot; // used when attachShadow mode is "closed" in order to be able to access the shadowRoot from js, for instance the lifecycle callbacks (_color())
 
   constructor() {
     // Always call super first in constructor
     super();
+    
+    this.addEventListener('click', this.onClick);
+    this.addEventListener('changeName', (e: CustomEvent) => 
+      {
+        this.title = e.detail && e.detail.title;
+      });
+
+    // Shadow DOM gives us a way to encapsulate the styling and markup of our components.
+    // It's a sub DOM tree attached to a DOM element, to make sure none of our styling leaks out, or gets overwritten by any external styles. 
 
     // this._root = this.attachShadow({ mode: "closed" });     
     const shadowRoot = this.attachShadow({ mode: "open" });
@@ -40,6 +50,13 @@ export class ImgInlineSvg extends HTMLElement {
       svg.style.fill = fillColor;
     }
   }
+
+
+
+  onClick() {
+    this.dispatchEvent( new CustomEvent ('changeName', {detail: {title: 'miha'}}))
+  }
+  
 
   // called after the web component has been attached in the DOM
   // lifecycle callback, invoked each time the custom element is appended into a document-connected element
