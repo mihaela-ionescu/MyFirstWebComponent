@@ -1,7 +1,7 @@
 # MyFirstWebComponent
 My first web component
 
-# to star a web server:
+# to start a web server:
 cd build
 npx http-server
 
